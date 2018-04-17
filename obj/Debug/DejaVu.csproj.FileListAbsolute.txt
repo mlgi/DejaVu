@@ -1,0 +1,7 @@
+D:\Projects\DejaVu\DejaVu\DejaVu\bin\Debug\DejaVu.exe.config
+D:\Projects\DejaVu\DejaVu\DejaVu\bin\Debug\DejaVu.exe
+D:\Projects\DejaVu\DejaVu\DejaVu\bin\Debug\DejaVu.pdb
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\Debug\DejaVu.csprojResolveAssemblyReference.cache
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\Debug\DejaVu.csproj.CoreCompileInputs.cache
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\Debug\DejaVu.exe
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\Debug\DejaVu.pdb
