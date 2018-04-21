@@ -22,7 +22,6 @@ namespace DejaVu
             ashketchum.AddData(new Matrix(new List<double>() { 0, 1 }), new Matrix(new List<double>() { 0 }));
             ashketchum.AddData(new Matrix(new List<double>() { 1, 1 }), new Matrix(new List<double>() { 1 }));
 
-
             do
             {
                 ashketchum.Train(network);
