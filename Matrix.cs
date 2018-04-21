@@ -153,6 +153,11 @@ namespace DejaVu
             _rows = 0;
             _columns = 0;
         }
+        public Matrix(List<double> vector) // vector constructor
+        {
+            _matrix = new List<List<double>>();
+            this.AddColumn(vector);
+        }
         public Matrix(Matrix other) // copy constructor
         {
             List<List<double>> newMatrix = new List<List<double>>();

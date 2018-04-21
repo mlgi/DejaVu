@@ -48,11 +48,36 @@ namespace DejaVu
             Matrix currentValues = inputs;
             for (int i = 1; i < _layerDepth; i++)
             {
-                Console.WriteLine("Evaluating layer " + i + " with " + currentValues);
+                //Console.WriteLine("Evaluating layer " + i + " with " + currentValues);
                 _layers[i].FeedLayer(currentValues);
                 currentValues = new Matrix(_layers[i].Values);
             }
             return _layers[_layerDepth - 1].Values;
+        }
+        public void Backpropagate(Matrix targets)
+        {
+            Layer targetLayer = new Layer("target", "lmao", _layers[_layerDepth - 1].Size, _layers[_layerDepth - 1].Size);
+            targetLayer.SetValues(targets);
+
+            for (int x = _layerDepth - 1; x >= 1; x--) // backprop each layer starting from the output layer
+            {
+                if (x == _layerDepth - 1)
+                {
+                    
+                    _layers[x].Backprop(_layers[x - 1], targetLayer);
+                } 
+                else
+                {
+                    _layers[x].Backprop(_layers[x - 1], _layers[x + 1]);
+                }
+            }
+        }
+        public void UpdateWeights(double learningRate)
+        {
+            for (int i = 1; i < _layerDepth; i++)
+            {
+                _layers[i].UpdateWeights(learningRate);
+            }
         }
     }
 }
