@@ -5,9 +5,7 @@ machine learning libraries out there. Essentially, the features included in this
 understand the most about neural networks. Also, this project is sort of representative of my own knowledge of 
 programming as I proceed through schooling. This is also somewhat based off of my previous repo of a neural 
 network based off of objects such as neurons and layers. However, this project focuses on rank-2 tensors or 
-matrices. The weights would be a linear map on a previous layer's values. Probably lol, I'm only on Calc I, I 
-haven't taken Linear Algebra yet :(, nor am I currently studying Computer Science in school other than 
-Introductory classes for transferring to a University.
+matrices. 
 
 ## Structure
 ### Matrix class
