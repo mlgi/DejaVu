@@ -10,8 +10,11 @@ namespace DejaVu
     class Layer
     {
         private Matrix _values; // matrix that holds the layer's values
+        private Matrix _dValues; // matrix that holds the layer's values inputted through the derivative of the activation function
         private Matrix _weights; // matrix that holds the layer's weights for the previous layer
+        private Matrix _dWeights; // matrix that holds the partial derivatives of the error with regards to each weight
         private Matrix _biases; // matrix that holds the layer's biases
+        private Matrix _dBiases; // matrix that holds that partial derivatives of the error with regards to each bias
         private int _size; // number of neurons in the layer
         private string _type; // "input", "hidden", "output"
         private string _activation; // "leaky_relu", "tanh", "sigmoid", "relu", relu
@@ -121,6 +124,24 @@ namespace DejaVu
                     return (x > 0) ? x : 0;
             }
         }
+        public double d_Activate(double x) // derivative of the activation functions
+        {
+            switch (_activation)
+            {
+                case "leaky_relu":
+                    if (x > 0)
+                        return 1;
+                    else
+                        return 0.01;
+                case "tanh":
+                    return 1 / Math.Pow(Math.Cosh(x), 2);
+                case "sigmoid":
+                    return (1.0 / (1 + Math.Exp(-x))) * (1.0 - (1.0 / (1 + Math.Exp(-x))));
+                default:
+                case "relu":
+                    return (x > 0) ? 1 : 0;
+            }
+        }
         public Matrix Activate(Matrix X) // activation function applied to a matrix
         {
             Matrix newMatrix = new Matrix();
@@ -135,9 +156,25 @@ namespace DejaVu
             }
             return newMatrix;
         }
-        public void FeedLayer(Matrix previousLayer) // generates this layer's values based off previous layer's values and this layer's weights+biases
+        public Matrix d_Activate(Matrix X) // derivative of the activation function applied to a matrix
         {
+            Matrix newMatrix = new Matrix();
+            for (int i = 0; i < X.Columns; i++)
+            {
+                List<double> newColumn = new List<double>();
+                for (int j = 0; j < X.Rows; j++)
+                {
+                    newColumn.Add(d_Activate(X[i][j]));
+                }
+                newMatrix.AddColumn(newColumn);
+            }
+            return newMatrix;
+        }
+        public void FeedLayer(Matrix previousLayer) // generates this layer's values based off previous layer's values and this layer's weights and biases
+        {
+            _dValues = (_weights * previousLayer) + _biases;
             _values = (_weights * previousLayer) + _biases;
+            _dValues = d_Activate(_dValues);
             _values = Activate(_values);
         }
         public void SetValues(Matrix inputValues)

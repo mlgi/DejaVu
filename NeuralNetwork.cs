@@ -12,6 +12,7 @@ namespace DejaVu
         private List<Layer> _layers;
         private int _layerDepth;
         private int _inputSize;
+
         // properties
         public int InputSize // return size of inputlayer
         {
