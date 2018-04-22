@@ -11,9 +11,9 @@ namespace DejaVu
         static void Main(string[] args)
         {
             NeuralNetwork network = new NeuralNetwork();
-            Trainer ashketchum = new Trainer("SGD", 0.05); // create a new trainer using stochastic gradient descent with learning rate of 5%
+            Trainer ashketchum = new Trainer("SGD", "momentum", 0.05, 0.9);
             network.AddLayer("input", "leaky_relu", 2, 0); 
-            network.AddLayer("hidden", "leaky_relu", 3, 2); 
+            network.AddLayer("hidden", "leaky_relu", 3, 2);
             network.AddLayer("output", "sigmoid", 1, 3); // schqueeze the output (0, 1)
 
             // AND gate data
@@ -21,12 +21,23 @@ namespace DejaVu
             ashketchum.AddData(new Matrix(new List<double>() { 1, 0 }), new Matrix(new List<double>() { 0 }));
             ashketchum.AddData(new Matrix(new List<double>() { 0, 1 }), new Matrix(new List<double>() { 0 }));
             ashketchum.AddData(new Matrix(new List<double>() { 1, 1 }), new Matrix(new List<double>() { 1 }));
-
+            int count = 0;
+            DateTime start = DateTime.Now;
+            TimeSpan diff = DateTime.Now - start;
             do
             {
                 ashketchum.Train(network);
                 Console.WriteLine("error: " + ashketchum.error);
-            } while (ashketchum.error > 0.005);
+                Console.WriteLine(count + " iterations");
+                diff = DateTime.Now - start;
+                Console.WriteLine(diff);
+                Console.SetCursorPosition(0, 0);
+                count++;
+            } while (ashketchum.error > 0.0025);
+            diff = DateTime.Now - start;
+            Console.WriteLine("error: " + ashketchum.error);
+            Console.WriteLine(count + " iterations");
+            Console.WriteLine(diff);
 
             while (true)
             {

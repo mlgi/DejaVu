@@ -25,11 +25,31 @@ namespace DejaVu
                 throw new Exception("Cannot change network size");
             }
         }
+        public List<Layer> Layers {
+            get
+            {
+                return _layers;
+            }
+            set
+            {
+                throw new Exception("cannot directly change layers");
+            }
+        }
         // constructors
         public NeuralNetwork() 
         {
             _layers = new List<Layer>();
             _layerDepth = 0;
+        }
+        public NeuralNetwork(NeuralNetwork other) // copy constructor
+        {
+            _layerDepth = other._layerDepth;
+            _inputSize = other._inputSize;
+            _layers = new List<Layer>();
+            foreach (Layer layer in other._layers)
+            {
+                _layers.Add(new Layer(layer));
+            }
         }
         // methods
         public void AddLayer(string type, string activation, int neuronCount, int previousLayerNeuronCount)
@@ -71,13 +91,13 @@ namespace DejaVu
                     _layers[x].Backprop(_layers[x - 1], _layers[x + 1]);
                 }
             }
-        }
-        public void UpdateWeights(double learningRate)
+        } // backpropagate using target values
+        /*public void UpdateWeights(NeuralNetwork parameters)
         {
             for (int i = 1; i < _layerDepth; i++)
             {
-                _layers[i].UpdateWeights(learningRate);
+                _layers[i].UpdateWeights(parameters._layers[i]);
             }
-        }
+        }*/
     }
 }

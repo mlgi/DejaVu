@@ -1,0 +1,5 @@
+D:\Projects\DejaVu\DejaVu\DejaVu\bin\x64\wacko\DejaVu.exe.config
+D:\Projects\DejaVu\DejaVu\DejaVu\bin\x64\wacko\DejaVu.exe
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\x64\wacko\DejaVu.csproj.CoreCompileInputs.cache
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\x64\wacko\DejaVu.exe
+D:\Projects\DejaVu\DejaVu\DejaVu\obj\x64\wacko\DejaVu.csprojResolveAssemblyReference.cache

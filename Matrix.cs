@@ -106,10 +106,17 @@ namespace DejaVu
                     for (int j = 0; j < left.Rows; j++)
                     {
                         double sum = 0;
+                        /*
                         for (int k = 0; k < left.Columns; k++)
                         {
                             sum += left[k][j] * right[i][k];
                         }
+                        */
+                        Parallel.For(0, left.Columns, (k, state) =>
+                        {
+                            sum += left[k][j] * right[i][k];
+                        }
+                        );
                         newColumn.Add(sum);
                     }
                     newMatrix.AddColumn(newColumn);

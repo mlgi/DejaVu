@@ -31,12 +31,18 @@ This class holds layer values, weights, and biases and performing essential func
 This class holds matrices and performing matrix operations
 
 ### Trainer class
-This class manages training for neural networks. Currently only supports stochasitic gradient descent. 
+This class manages training for neural networks. Currently only supports stochastic gradient descent. As of 
+right now, it only supports one optimizer: momentum. (or two if you include no optimization)
 
 ## To-do
 - Allow different network structures, such as the different kinds of recurrent networks
 - Implement other training styles?
-- more activation functions?
+- more activation functions? (softplus?)
 - maybe create this in C++ and other languages too, just to practice my hand and allow me to use it in various 
 other projects if ever
+- create this in python and try openAI's contest
 - git gud 
+
+## Working on
+- mini-batch gradient descent
+- more optimizers

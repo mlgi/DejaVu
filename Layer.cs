@@ -11,8 +11,8 @@ namespace DejaVu
     {
         private Matrix _values = new Matrix(); // matrix that holds the layer's values
         private Matrix _dValues = new Matrix(); // matrix that holds the layer's values inputted through the derivative of the activation function
-        private Matrix _weights = new Matrix(); // matrix that holds the layer's weights for the previous layer
-        private Matrix _dWeights = new Matrix(); // matrix that holds the partial derivatives of the error with regards to each weight
+        public Matrix Weights = new Matrix(); // matrix that holds the layer's weights for the previous layer
+        public Matrix dWeights = new Matrix(); // matrix that holds the partial derivatives of the error with regards to each weight
         private Matrix _biases = new Matrix(); // matrix that holds the layer's biases
         private Matrix _dBiases = new Matrix(); // matrix that holds the partial derivatives of the error with regards to each bias
         private Matrix _bpError = new Matrix(); // matrix that holds the backpropagated error for each neuron
@@ -39,20 +39,20 @@ namespace DejaVu
                 return new Matrix(_values);
             }
         }
-        public Matrix Weights // returns a copy of _weight matrix
+        /*public Matrix Weights // returns a copy of _weight matrix
         {
             get
             {
                 if (_type != "input")
-                    return new Matrix(_weights);
+                    return new Matrix(Weights);
                 else
                     return null;
             }
             set
             {
-                _weights = value;
+                Weights = value;
             }
-        }
+        }*/
         public Matrix Biases // returns a copy of_biases matrix
         {
             get
@@ -85,7 +85,7 @@ namespace DejaVu
                     weightMatrix.AddColumn(newColumn);
                     
                 }
-                _weights = weightMatrix;
+                Weights = weightMatrix;
                 // initialize random biases
                 Matrix biasMatrix = new Matrix();
                 List<double> newBiasColumn = new List<double>();
@@ -97,6 +97,19 @@ namespace DejaVu
                 _biases = biasMatrix;
             }
             rand = null;
+        }
+        public Layer(Layer other) // copy constructor
+        {
+            _values = new Matrix(other._values);
+            _dValues = new Matrix(other._dValues);
+            Weights = new Matrix(other.Weights);
+            dWeights = new Matrix(other.dWeights);
+            _biases = new Matrix(other._biases);
+            _dBiases = new Matrix(other._dBiases);
+            _bpError = new Matrix(other._bpError);
+            _size = other._size;
+            _type = other._type;
+            _activation = other._activation;
         }
         // methods
         public double NextNormal(double mean, double stdDev) // next gaussian random number with mean and standard deviation
@@ -173,19 +186,19 @@ namespace DejaVu
         }
         public void FeedLayer(Matrix previousLayer) // generates this layer's values based off previous layer's values and this layer's weights and biases
         {
-            _dValues = (_weights * previousLayer) + _biases;
-            _values = (_weights * previousLayer) + _biases;
+            _dValues = (Weights * previousLayer) + _biases;
+            _values = (Weights * previousLayer) + _biases;
             _dValues = d_Activate(_dValues);
             _values = Activate(_values);
         }
-        public void Backprop(Layer previousLayer, Layer nextLayer) // backpropagates previous layer's weights and calculates _dWeights (next is towards output, previous is towards input)
+        public void Backprop(Layer previousLayer, Layer nextLayer) // backpropagates previous layer's weights and calculates dWeights (next is towards output, previous is towards input)
         {
             if (_type == "output") // backpropagates with regards to error function
             {
                 
-                _dWeights = new Matrix();
+                dWeights = new Matrix();
                 _bpError = new Matrix();
-                for (int i = 0; i < _weights.Columns; i++) // for each neuron i in the preceding layer
+                for (int i = 0; i < Weights.Columns; i++) // for each neuron i in the preceding layer
                 {
                     List<double> newColumn = new List<double>();
                     List<double> newBPErrorColumn = new List<double>();
@@ -203,18 +216,18 @@ namespace DejaVu
                         newColumn.Add(dError_dwij);
                     }
                     _bpError.AddColumn(newBPErrorColumn);
-                    _dWeights.AddColumn(newColumn);
+                    dWeights.AddColumn(newColumn);
                 }
             }
             else if (_type != "input" && _type != "output") // input layer doesnt have weights
             {
-                _dWeights = new Matrix();
+                dWeights = new Matrix();
                 _bpError = new Matrix();
-                for (int i = 0; i < _weights.Columns; i++) // for each neuron i in the preceding layer
+                for (int i = 0; i < Weights.Columns; i++) // for each neuron i in the preceding layer
                 {
                     List<double> newColumn = new List<double>();
                     List<double> newBPErrorColumn = new List<double>();
-                    for (int j = 0; j < _weights.Rows; j++) // for each neuron j in this layer
+                    for (int j = 0; j < Weights.Rows; j++) // for each neuron j in this layer
                     {
                         double Sum_xwjq_Xalphaq = 0.0;
                         for (int q = 0; q < nextLayer.Size; q++) // for each neuron q in the next layer x
@@ -229,15 +242,14 @@ namespace DejaVu
                         newColumn.Add(dError_dwij);
                     }
                     _bpError.AddColumn(newBPErrorColumn);
-                    _dWeights.AddColumn(newColumn);
+                    dWeights.AddColumn(newColumn);
                 }
             }
         }
-        public void UpdateWeights(double learningRate) // update weights using _dweights
+        /*public void UpdateWeights(Layer parameters) // update weights using weights of another layer
         {
-            Matrix deltaWeights = _dWeights * learningRate * -1; 
-           _weights = _weights + deltaWeights;
-        }
+            Weights = parameters.Weights;
+        }*/
         public void SetValues(Matrix inputValues)
         {
             _values = inputValues;
@@ -245,7 +257,7 @@ namespace DejaVu
         ~Layer() // destroi boii
         {
             _values = null;
-            _weights = null;
+            Weights = null;
         }
     }
 }
