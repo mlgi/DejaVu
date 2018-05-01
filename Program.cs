@@ -11,7 +11,7 @@ namespace DejaVu
         static void Main(string[] args)
         {
             NeuralNetwork network = new NeuralNetwork();
-            Trainer ashketchum = new Trainer("SGD", "momentum", 0.05, 0.9);
+            Trainer ashketchum = new Trainer(1, "momentum", 0.05, 0.9);
             network.AddLayer("input", "leaky_relu", 2, 0); 
             network.AddLayer("hidden", "leaky_relu", 3, 2);
             network.AddLayer("output", "sigmoid", 1, 3); // schqueeze the output (0, 1)
