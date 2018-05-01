@@ -84,3 +84,5 @@ other projects if ever
 15. [Beginner Intro to Neural Networks](https://www.youtube.com/watch?v=ZzWaow1Rvho). 
     - The video that started it all. By watching this I was amazed by how simple neural networks really are(kinda). At the very least, it seemed doable so I decided to try it. Here I am today.
 16. [Dropout: A simple way to prevent neural networks from overfitting](http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf) by Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever and Ruslan Salakhutdinov.
+17. [A Theoretical Framework for Back-Propagation](http://yann.lecun.com/exdb/publis/pdf/lecun-88.pdf) by Yann LeCunn 
+    - How could I not include Yann LeCun
